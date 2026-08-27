@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Bagas - Siswa Rekayasa Perangkat Lunak</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS embedded as requested by project rules for standalone simulation -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Card & Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header & Navbar (Modular Navigation) -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Brand / Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('beranda')">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-indigo-200">
+                        B
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-800 text-lg tracking-tight">Bagas.Dev</span>
+                        <span class="block text-xs text-slate-500 font-medium">XII - RPL / Informatika</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu Utama -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchPage('beranda')" id="nav-beranda" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-indigo-600 bg-indigo-50">
+                        <i class="fa-solid fa-house mr-1.5"></i> Beranda
+                    </button>
+                    <button onclick="switchPage('tentang')" id="nav-tentang" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-user mr-1.5"></i> Tentang Saya
+                    </button>
+                    <button onclick="switchPage('jaringan')" id="nav-jaringan" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-network-wired mr-1.5"></i> Jaringan Komputer
+                    </button>
+                    <button onclick="switchPage('iot')" id="nav-iot" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-microchip mr-1.5"></i> IoT & Arduino
+                    </button>
+                    <button onclick="switchPage('karya')" id="nav-karya" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-lightbulb mr-1.5"></i> Galeri Proyek
+                    </button>
+                    <button onclick="switchPage('kontak')" id="nav-kontak" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-address-book mr-1.5"></i> Kontak
+                    </button>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchPage('beranda'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-indigo-600 bg-indigo-50">
+                <i class="fa-solid fa-house mr-2"></i> Beranda
+            </button>
+            <button onclick="switchPage('tentang'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-user mr-2"></i> Tentang Saya
+            </button>
+            <button onclick="switchPage('jaringan'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-network-wired mr-2"></i> Jaringan Komputer
+            </button>
+            <button onclick="switchPage('iot'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-microchip mr-2"></i> IoT & Arduino
+            </button>
+            <button onclick="switchPage('karya'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-lightbulb mr-2"></i> Galeri Proyek
+            </button>
+            <button onclick="switchPage('kontak'); toggleMobileMenu();" class="mobile-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-address-book mr-2"></i> Kontak
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- 1. HALAMAN BERANDA (index.html simulation) -->
+        <section id="page-beranda" class="page-section active space-y-12">
+            <!-- Hero / Banner Section -->
+            <div class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 opacity-10 pointer-events-none transform skew-x-12"></div>
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2 space-y-6">
+                        <span class="inline-flex items-center space-x-2 bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border border-indigo-500/30">
+                            <i class="fa-solid fa-graduation-cap"></i> Portofolio Akademik Informatika
+                        </span>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                            Halo, Saya <span class="text-indigo-400">Bagas</span>
+                        </h1>
+                        <p class="text-lg text-slate-300 max-w-xl font-light">
+                            Siswa Kelas XII - Peminatan Rekayasa Perangkat Lunak / Informatika. Berdedikasi dalam pengembangan web, jaringan komputer, dan sistem Internet of Things.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <button onclick="switchPage('karya')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center space-x-2">
+                                <span>Lihat Proyek Saya</span>
+                                <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </button>
+                            <button onclick="switchPage('kontak')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold px-6 py-3 rounded-xl transition-all flex items-center space-x-2">
+                                <span>Hubungi Saya</span>
+                                <i class="fa-solid fa-envelope text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl bg-slate-800">
+                            <!-- assets/img/profil.jpg fallback placeholder -->
+                            <img src="https://placehold.co/400x400/4f46e5/ffffff?text=Bagas+Profil" 
+                                 onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Foto+Bagas'" 
+                                 alt="Foto Profil Bagas" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ringkasan Keahlian (Skills Summary) -->
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-slate-800 tracking-tight flex items-center space-x-2">
+                        <i class="fa-solid fa-bolt text-indigo-600"></i>
+                        <span>Ringkasan Keahlian</span>
+                    </h2>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kompetensi Utama</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Skill 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm card-hover flex flex-col items-center text-center space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-brands fa-html5"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">HTML & CSS</h3>
+                        <p class="text-xs text-slate-500">Struktur & Styling Web Dasar</p>
+                    </div>
+                    <!-- Skill 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm card-hover flex flex-col items-center text-center space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Jaringan Dasar</h3>
+                        <p class="text-xs text-slate-500">Konfigurasi IP & Cisco Packet Tracer</p>
+                    </div>
+                    <!-- Skill 3 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm card-hover flex flex-col items-center text-center space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Problem Solving</h3>
+                        <p class="text-xs text-slate-500">Debugging & Analisis Logika</p>
+                    </div>
+                    <!-- Skill 4 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm card-hover flex flex-col items-center text-center space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Pemrograman Dasar</h3>
+                        <p class="text-xs text-slate-500">Algoritma & Struktur Kontrol</p>
+                    </div>
+                    <!-- Skill 5 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm card-hover flex flex-col items-center text-center space-y-3 col-span-2 sm:col-span-1">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">IoT & Arduino</h3>
+                        <p class="text-xs text-slate-500">Mikrokontroler & Sensor</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. HALAMAN "TENTANG SAYA" (pages/tentang.html simulation) -->
+        <section id="page-tentang" class="page-section space-y-10">
+            <div class="border-b border-slate-200 pb-5">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">Tentang Saya</h1>
+                <p class="text-slate-500 mt-1">Biodata lengkap, latar belakang pendidikan, dan dokumentasi aktivitas pembelajaran.</p>
+            </div>
+
+            <!-- Biodata Lengkap Card / Table -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 lg:col-span-1">
+                    <div class="flex flex-col items-center text-center pb-4 border-b border-slate-100">
+                        <div class="w-32 h-32 rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md mb-4 bg-slate-100">
+                            <img src="https://placehold.co/300x300/4f46e5/ffffff?text=Bagas" 
+                                 onerror="this.src='https://placehold.co/300x300/1e293b/ffffff?text=Bagas'" 
+                                 alt="Bagas" class="w-full h-full object-cover">
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-800">Bagas</h2>
+                        <span class="text-xs bg-indigo-50 text-indigo-600 font-semibold px-3 py-1 rounded-full mt-1">Kelas XII RPL</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between py-1 border-b border-slate-50">
+                            <span class="text-slate-500">Peminatan</span>
+                            <span class="font-medium text-slate-800">Rekayasa Perangkat Lunak</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-50">
+                            <span class="text-slate-500">Status</span>
+                            <span class="font-medium text-slate-800">Siswa Aktif Kelas XII</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-50">
+                            <span class="text-slate-500">Minat Studi</span>
+                            <span class="font-medium text-slate-800">Software Engineering & IoT</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span class="text-slate-500">Hobi</span>
+                            <span class="font-medium text-slate-800">Coding, Jaringan, Hardware</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-indigo-600"></i>
+                            <span>Riwayat Pendidikan & Minat Studi</span>
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Saya adalah siswa kelas XII yang mendalami bidang Rekayasa Perangkat Lunak. Selama masa studi di SMK, saya aktif mempelajari berbagai bahasa pemrograman dasar, perancangan basis data, konfigurasi jaringan komputer lokal maupun luas, serta eksperimen perangkat mikrokontroler Arduino.
+                        </p>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Di masa depan, saya bercita-cita untuk melanjutkan studi di bidang Teknik Informatika atau Sistem Informasi guna memperdalam keahlian dalam menciptakan solusi teknologi yang bermanfaat bagi masyarakat.
+                        </p>
+                    </div>
+
+                    <!-- Galeri Aktivitas Belajar (3-4 foto dokumentasi) -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-camera text-indigo-600"></i>
+                            <span>Galeri Aktivitas Belajar di Lab Komputer</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                                    <img src="https://placehold.co/600x400/4f46e5/ffffff?text=Praktikum+Coding" 
+                                         onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Praktikum+Coding'" 
+                                         alt="Praktikum Pemrograman" class="w-full h-full object-cover">
+                                </div>
+                                <p class="text-xs font-medium text-slate-600 text-center">Praktikum Pengembangan Perangkat Lunak</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                                    <img src="https://placehold.co/600x400/0284c7/ffffff?text=Simulasi+Jaringan" 
+                                         onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Simulasi+Jaringan'" 
+                                         alt="Praktikum Jaringan" class="w-full h-full object-cover">
+                                </div>
+                                <p class="text-xs font-medium text-slate-600 text-center">Simulasi Topologi Jaringan Komputer</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                                    <img src="https://placehold.co/600x400/0d9488/ffffff?text=Rakit+Arduino" 
+                                         onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Rakit+Arduino'" 
+                                         alt="Praktikum IoT" class="w-full h-full object-cover">
+                                </div>
+                                <p class="text-xs font-medium text-slate-600 text-center">Perakitan Modul IoT & Sensor Arduino</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                                    <img src="https://placehold.co/600x400/7c3aed/ffffff?text=Kolaborasi+Tim" 
+                                         onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Kolaborasi+Tim'" 
+                                         alt="Kolaborasi Tugas" class="w-full h-full object-cover">
+                                </div>
+                                <p class="text-xs font-medium text-slate-600 text-center">Diskusi & Kerja Kelompok Proyek</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MODUL JARINGAN KOMPUTER (pages/jaringan.html simulation) -->
+        <section id="page-jaringan" class="page-section space-y-8">
+            <div class="border-b border-slate-200 pb-5">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center space-x-3">
+                    <i class="fa-solid fa-network-wired text-indigo-600"></i>
+                    <span>Modul Jaringan Komputer</span>
+                </h1>
+                <p class="text-slate-500 mt-1">Draft card dokumentasi konfigurasi IP Address, simulasi topologi jaringan, analisis protokol, dan perangkat jaringan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Draft Card 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Konfigurasi IP</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Modul Kelas XII</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Konfigurasi IP Address & Subnetting</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Dokumentasi praktikum pengaturan IPv4, pembagian subnet mask (CIDR), pengujian koneksi menggunakan perintah ping, serta konfigurasi DHCP Server pada perangkat router.
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs font-mono text-slate-700 space-y-1">
+                        <div>IP Address: 192.168.1.10 /24</div>
+                        <div>Subnet Mask: 255.255.255.0</div>
+                        <div>Default Gateway: 192.168.1.1</div>
+                    </div>
+                </div>
+
+                <!-- Draft Card 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">Simulasi Topologi</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Modul Kelas XII</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Simulasi Topologi (Cisco Packet Tracer)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Perancangan jaringan LAN menggunakan Cisco Packet Tracer mencakup penempatan switch, router, access point, serta simulasi pengiriman paket data antar VLAN.
+                    </p>
+                    <div class="rounded-xl overflow-hidden border border-slate-200 h-36 bg-slate-100">
+                        <img src="https://placehold.co/600x300/1e293b/ffffff?text=Cisco+Packet+Tracer+Topology" 
+                             onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Simulasi+Topologi'" 
+                             alt="Topologi Jaringan" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Draft Card 3 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">Analisis Protokol</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Modul Kelas XII</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Analisis Protokol Jaringan</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Pengamatan dan analisis lalu lintas data jaringan menggunakan perangkat analisis paket untuk memahami cara kerja protokol HTTP, DNS, TCP/IP, dan ICMP.
+                    </p>
+                </div>
+
+                <!-- Draft Card 4 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-purple-50 text-purple-600 px-3 py-1 rounded-full">Perangkat Keras</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Modul Kelas XII</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Konfigurasi Perangkat Jaringan</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Pengenalan fisik dan konfigurasi dasar perangkat access point, kabel UTP (Straight/Cross), crimping, serta pengujian konektivitas fisik di laboratorium.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MODUL IOT & ARDUINO (pages/iot-arduino.html simulation) -->
+        <section id="page-iot" class="page-section space-y-8">
+            <div class="border-b border-slate-200 pb-5">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center space-x-3">
+                    <i class="fa-solid fa-microchip text-indigo-600"></i>
+                    <span>Modul Internet of Things / Arduino</span>
+                </h1>
+                <p class="text-slate-500 mt-1">Draft card dokumentasi skematik sirkuit (Wokwi/Fritzing), baris program C/C++, dan foto hasil rakitan sensor & aktuator.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- IoT Draft 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-amber-50 text-amber-600 px-3 py-1 rounded-full">Skematik & Sirkuit</span>
+                        <span class="text-xs text-slate-400">Wokwi / Fritzing</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Sistem Monitoring Suhu DHT11 & LCD</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Perancangan rangkaian sensor suhu dan kelembapan DHT11 dengan mikrokontroler Arduino Uno serta tampilan real-time pada layar LCD 16x2.
+                    </p>
+                    <div class="rounded-xl overflow-hidden border border-slate-200 h-36 bg-slate-100">
+                        <img src="https://placehold.co/600x300/0f172a/ffffff?text=Wokwi+IoT+Circuit" 
+                             onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Skematik+Sirkuit'" 
+                             alt="Skematik Sirkuit" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- IoT Draft 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-rose-50 text-rose-600 px-3 py-1 rounded-full">Kode Program C/C++</span>
+                        <span class="text-xs text-slate-400">Arduino IDE</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Baris Program Mikrokontroler</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Contoh kode program C/C++ untuk pembacaan data sensor, pengaturan kondisi logika aktuator (Servo motor dan Buzzer), serta pengiriman data serial.
+                    </p>
+                    <div class="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs overflow-x-auto shadow-inner">
+                        <pre><code>#include &lt;LiquidCrystal.h&gt;
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Bagas IoT Lab");
+}
+
+void loop() {
+  // Pembacaan sensor & logika
+  delay(1000);
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- IoT Draft 3 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-teal-50 text-teal-600 px-3 py-1 rounded-full">Dokumentasi Fisik</span>
+                        <span class="text-xs text-slate-400">Praktikum Lab</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Rakitan Sensor & Aktuator</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Foto dokumentasi hasil perakitan hardware menggunakan breadboard, kabel jumper, sensor ultrasonik HC-SR04, dan servo motor.
+                    </p>
+                    <div class="rounded-xl overflow-hidden border border-slate-200 h-36 bg-slate-100">
+                        <img src="https://placehold.co/600x300/0d9488/ffffff?text=Arduino+Hardware+Assembly" 
+                             onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Rakitan+Sensor'" 
+                             alt="Rakitan Sensor" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- IoT Draft 4 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 card-hover">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold bg-violet-50 text-violet-600 px-3 py-1 rounded-full">Proyek Otomasi</span>
+                        <span class="text-xs text-slate-400">Pengembangan</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Otomasi Perangkat Berbasis IoT</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Integrasi modul ESP8266/ESP32 untuk menghubungkan perangkat mikrokontroler ke jaringan internet nirkabel (Wi-Fi) untuk kontrol jarak jauh.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. MODUL PROYEK & KOLABORASI (pages/karya-proyek.html simulation) -->
+        <section id="page-karya" class="page-section space-y-8">
+            <div class="border-b border-slate-200 pb-5">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center space-x-3">
+                    <i class="fa-solid fa-lightbulb text-indigo-600"></i>
+                    <span>Galeri Proyek</span>
+                </h1>
+                <p class="text-slate-500 mt-1">Menampilkan screenshot, deskripsi singkat proyek, serta tautan repositori atau demo tugas yang pernah dibuat.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Proyek 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-slate-100 overflow-hidden border-b border-slate-100">
+                            <img src="https://placehold.co/600x400/4f46e5/ffffff?text=Portofolio+Web" 
+                                 onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Web+Proyek'" 
+                                 alt="Screenshot Proyek" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-semibold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">Web Development</span>
+                            <h3 class="text-lg font-bold text-slate-800">Website Portofolio Pribadi</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Website portofolio interaktif yang dibangun menggunakan HTML, Tailwind CSS, dan JavaScript untuk memenuhi standar tugas akhir informatika.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <a href="#" onclick="showInfoBox('Membuka tautan repositori proyek web portofolio...')" class="inline-flex items-center space-x-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+                            <span>Lihat Repositori / Demo</span>
+                            <i class="fa-solid fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyek 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-slate-100 overflow-hidden border-b border-slate-100">
+                            <img src="https://placehold.co/600x400/0284c7/ffffff?text=Sistem+Inventaris" 
+                                 onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=Inventaris'" 
+                                 alt="Screenshot Proyek" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Aplikasi Sederhana</span>
+                            <h3 class="text-lg font-bold text-slate-800">Sistem Pendataan Lab Komputer</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Aplikasi manajemen data inventaris perangkat keras dan catatan peminjaman lab komputer sekolah berbasis web lokal.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <a href="#" onclick="showInfoBox('Membuka tautan repositori sistem pendataan lab...')" class="inline-flex items-center space-x-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+                            <span>Lihat Repositori / Demo</span>
+                            <i class="fa-solid fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyek 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-slate-100 overflow-hidden border-b border-slate-100">
+                            <img src="https://placehold.co/600x400/0d9488/ffffff?text=IoT+Monitoring" 
+                                 onerror="this.src='https://placehold.co/600x400/334155/ffffff?text=IoT+Project'" 
+                                 alt="Screenshot Proyek" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-semibold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">IoT & Arduino</span>
+                            <h3 class="text-lg font-bold text-slate-800">Alat Ukur Suhu Ruangan Otomatis</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Perangkat IoT berbasis sensor DHT11 dan mikrokontroler untuk monitoring suhu kelas secara otomatis dengan indikator LED & LCD.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <a href="#" onclick="showInfoBox('Membuka tautan repositori proyek IoT...')" class="inline-flex items-center space-x-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+                            <span>Lihat Repositori / Demo</span>
+                            <i class="fa-solid fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. HALAMAN FORMULIR KONTAK (pages/kontak.html simulation) -->
+        <section id="page-kontak" class="page-section space-y-8">
+            <div class="border-b border-slate-200 pb-5">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center space-x-3">
+                    <i class="fa-solid fa-address-book text-indigo-600"></i>
+                    <span>Kontak & Pesan</span>
+                </h1>
+                <p class="text-slate-500 mt-1">Kirimkan masukan, pertanyaan, atau penawaran kolaborasi melalui formulir di bawah ini.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Informasi Kontak Alternatif -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 lg:col-span-1">
+                    <h3 class="text-lg font-bold text-slate-800">Informasi Kontak</h3>
+                    <p class="text-sm text-slate-600">
+                        Anda juga dapat menghubungi saya melalui saluran komunikasi resmi sekolah atau akun sosial media berikut:
+                    </p>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-slate-400 font-medium">Email Sekolah</span>
+                                <span class="font-medium text-slate-800">bagas.siswa@sekolah.sch.id</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-slate-400 font-medium">Lokasi Kota</span>
+                                <span class="font-medium text-slate-800">Surabaya, Jawa Timur</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i class="fa-brands fa-github"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-slate-400 font-medium">GitHub</span>
+                                <span class="font-medium text-slate-800">github.com/bagas-rpl</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulir Pesan -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm lg:col-span-2">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Nama Pengirim</label>
+                                <input type="text" id="nama-pengirim" required placeholder="Masukkan nama Anda" 
+                                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Alamat Email</label>
+                                <input type="email" id="email-pengirim" required placeholder="nama@email.com" 
+                                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Kategori Pesan</label>
+                            <select id="kategori-pesan" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+                                <option value="Pertanyaan">Pertanyaan</option>
+                                <option value="Kolaborasi">Kolaborasi</option>
+                                <option value="Saran">Saran</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Pesan Teks</label>
+                            <textarea id="pesan-teks" rows="4" required placeholder="Tuliskan pesan atau masukan Anda di sini..." 
+                                      class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                            <span>Tombol Kirim</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+                <p class="text-sm font-medium text-slate-700">&copy; 2026 Bagas. Hak Cipta Dilindungi.</p>
+                <p class="text-xs text-slate-500 mt-0.5">Siswa Kelas XII - Peminatan Rekayasa Perangkat Lunak / Informatika</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" onclick="showInfoBox('Menuju akun GitHub Bagas')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </a>
+                <a href="#" onclick="showInfoBox('Menuju akun Instagram Bagas')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-brands fa-instagram text-lg"></i>
+                </a>
+                <a href="#" onclick="showInfoBox('Menuju akun LinkedIn Bagas')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-brands fa-linkedin text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Non-Blocking Message Box (Replacing alert) -->
+    <div id="info-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mx-auto font-bold">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Informasi Portofolio</h3>
+            <p id="modal-message" class="text-sm text-slate-600 leading-relaxed">Pesan berhasil dikirim.</p>
+            <button onclick="closeInfoBox()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-xl transition-all">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        function switchPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(p => p.classList.remove('active'));
+
+            // Show target page
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Update desktop nav buttons styling
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-indigo-600', 'bg-indigo-50');
+                btn.classList.add('text-slate-600', 'hover:text-indigo-600', 'hover:bg-slate-50');
+            });
+
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-600', 'hover:text-indigo-600', 'hover:bg-slate-50');
+                activeNav.classList.add('text-indigo-600', 'bg-indigo-50');
+            }
+
+            // Update mobile nav buttons styling
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+            mobileNavButtons.forEach(btn => {
+                btn.classList.remove('text-indigo-600', 'bg-indigo-50');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showInfoBox(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeInfoBox() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const nama = document.getElementById('nama-pengirim').value;
+            const kategori = document.getElementById('kategori-pesan').value;
+            
+            showInfoBox(`Terima kasih, ${nama}! Pesan dengan kategori "${kategori}" telah berhasil dikirim kepada Bagas.`);
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+</body>
+</html>
