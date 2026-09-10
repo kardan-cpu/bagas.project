@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Idola - B.J. Habibie</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link CSS dari dalam folder css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Efek Latar Belakang Galaxy -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <!-- Main Container Glassmorphism -->
+    <div class="portfolio-card">
+        
+        <!-- Header / Banner Profil -->
+        <header class="profile-header">
+            <div class="avatar-wrapper">
+                <!-- Menggunakan gambar online awal -->
+                <img src="image/galeri.jpg" alt="Prof. Dr. Ing. H. B.J. Habibie" class="profile-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <div class="profile-title">
+                <h1>B.J. Habibie</h1>
+                <p class="tagline">Bapak Teknologi Indonesia & Presiden RI Ke-3</p>
+                <div class="badge-container">
+                    <span class="badge">Mr. Crack</span>
+                    <span class="badge">Inovator Kedirgantaraan</span>
+                    <span class="badge">Tokoh Bangsa</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigasi Tab -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="openTab('profil')">Profil</button>
+            <button class="tab-btn" onclick="openTab('pendidikan')">Pendidikan & Karir</button>
+            <button class="tab-btn" onclick="openTab('keahlian')">Keahlian & Hobi</button>
+            <button class="tab-btn" onclick="openTab('galeri')">Galeri Foto</button>
+            <button class="tab-btn" onclick="openTab('inspirasi')">Inspirasi</button>
+        </nav>
+
+        <!-- Konten Tab 1: Profil -->
+        <section id="profil" class="tab-content active">
+            <h2>Profil Singkat</h2>
+            <div class="content-grid">
+                <div class="info-box">
+                    <h3>Biodata Utama</h3>
+                    <ul>
+                        <li><strong>Nama Lengkap:</strong> Prof. Dr. Ing. H. Bacharuddin Jusuf Habibie</li>
+                        <li><strong>Lahir:</strong> Parepare, Sulawesi Selatan, 25 Juni 1936</li>
+                        <li><strong>Wafat:</strong> Jakarta, 11 September 2019 (Usia 83)</li>
+                        <li><strong>Bidang Keahlian:</strong> Teknik Penerbangan & Aerodinamika</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>Sekilas Tentang Habibie</h3>
+                    <p>
+                        B.J. Habibie adalah sosok teknokrat jenius yang mengharumkan nama Indonesia di panggung dunia. 
+                        Dikenal dengan julukan <em>"Mr. Crack"</em> karena menemukan teori perambatan retakan pada struktur pesawat, 
+                        beliau berhasil membuktikan bahwa anak bangsa mampu memimpin industri teknologi tingkat tinggi melalui pembuatan pesawat terbang N-250 Gatotkaca.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konten Tab 2: Pendidikan & Karir -->
+        <section id="pendidikan" class="tab-content">
+            <h2>Pendidikan & Perjalanan Karir</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year">1954 - 1955</span>
+                    <h4>Institut Teknologi Bandung (ITB)</h4>
+                    <p>Menempuh pendidikan Teknik Mesin sebelum melanjutkan studi ke Jerman.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1955 - 1965</span>
+                    <h4>RWTH Aachen, Jerman</h4>
+                    <p>Meraih gelar Diplom-Ingenieur (1960) dan Doctor-Ingenieur dengan predikat <em>Summa Cum Laude</em> (1965).</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1965 - 1974</span>
+                    <h4>Messerschmitt-Bölkow-Blohm (MBB) Jerman</h4>
+                    <p>Menjabat sebagai Vice President & Director of Technology di perusahaan penerbangan terkemuka Jerman.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1978 - 1998</span>
+                    <h4>Menteri Negara Ristek / Kepala BPPT / Direktur IPTN</h4>
+                    <p>Memimpin riset dan industri strategis Indonesia, serta memproduksi pesawat buatan dalam negeri N-250.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1998 - 1999</span>
+                    <h4>Presiden Republik Indonesia Ke-3</h4>
+                    <p>Memimpin Indonesia pada era transisi reformasi dan meletakkan dasar kebebasan pers serta kebebasan berdemokrasi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konten Tab 3: Keahlian & Hobi -->
+        <section id="keahlian" class="tab-content">
+            <h2>Keahlian & Hobi</h2>
+            <div class="skills-hobbies-container">
+                <div class="info-box">
+                    <h3>Keahlian Utama</h3>
+                    <div class="skill-item">
+                        <span>Aeronautical Engineering & Aerodinamika</span>
+                        <div class="progress-bar"><div class="progress" style="width: 98%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span>Crack Propagation Theory (Faktor Habibie)</span>
+                        <div class="progress-bar"><div class="progress" style="width: 95%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span>Kepemimpinan Strategis & Kepresidenan</span>
+                        <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span>Penguasaan Bahasa (Jerman, Inggris, Indonesia)</span>
+                        <div class="progress-bar"><div class="progress" style="width: 95%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Hobi & Kegemaran</h3>
+                    <ul class="hobby-list">
+                        <li>📚 <strong>Membaca Buku:</strong> Menghabiskan waktu berjam-jam membaca buku sains, filsafat, dan biografi.</li>
+                        <li>✍️ <strong>Menulis Catatan & Buku:</strong> Menulis karya ilmiah dan buku otobiografi "Habibie & Ainun".</li>
+                        <li>🏍️ <strong>Koleksi Motor Klasik:</strong> Menggemari dunia otomotif, termasuk motor gede bermesin besar.</li>
+                        <li>✈️ <strong>Aeromodelling:</strong> Merancang miniatur model pesawat terbang sejak usia muda.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konten Tab 4: Galeri Foto -->
+        <section id="galeri" class="tab-content">
+            <h2>Galeri Foto Tertata</h2>
+            <div class="gallery-grid">
+                <div class="gallery-card">
+                    <img src="image/profil.jpg" alt="Kedirgantaraan">
+                    <div class="gallery-caption">Simbol Impian Kedirgantaraan</div>
+                </div>
+                <div class="gallery-card">
+                    <img src="image/pesawat.jpg" alt="Ikon Penerbangan">
+                    <div class="gallery-caption">Riset Penerbangan & Teknologi</div>
+                </div>
+                <div class="gallery-card">
+                    <img src="image/habibie ainun.webp" alt="Sains Kosmik">
+                    <div class="gallery-caption">kenangan habibie dan ainun</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konten Tab 5: Inspirasi -->
+        <section id="inspirasi" class="tab-content">
+            <h2>Kutipan Inspiratif</h2>
+            <div class="quotes-container">
+                <blockquote class="quote-card">
+                    <p>"Harus konsisten dalam menekuni bidang disiplin ilmu yang Anda pelajari. Jadilah yang terbaik di bidang Anda!"</p>
+                    <cite>— Prof. B.J. Habibie</cite>
+                </blockquote>
+                <blockquote class="quote-card">
+                    <p>"Tak ada gunanya IQ Anda tinggi namun malas, tidak memiliki disiplin. Yang penting adalah Anda sehat dan mau berkorban untuk masa depan yang lebih baik."</p>
+                    <cite>— Prof. B.J. Habibie</cite>
+                </blockquote>
+                <blockquote class="quote-card">
+                    <p>"Keberhasilan bukan milik mereka yang pintar, melainkan milik mereka yang senantiasa berusaha dan tidak pernah menyerah."</p>
+                    <cite>— Prof. B.J. Habibie</cite>
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="portfolio-footer">
+            <p>Tugas Informatika Kelas XII | Dibuat dengan HTML & CSS Native (Galaxy Blue Theme)</p>
+        </footer>
+
+    </div>
+
+    <!-- Script Tab Navigation -->
+    <script>
+        function openTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
